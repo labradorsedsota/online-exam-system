@@ -11,8 +11,8 @@
   --red-ink: #C0392B;
   --green-ink: #27AE60;
   --tape-beige: #F0E6D0;
-  --font-print: 'Playfair Display', 'ZCOOL XiaoWei', Georgia, serif;
-  --font-hand: 'Architects Daughter', 'ZCOOL XiaoWei', cursive;
+  --font-print: 'Playfair Display', 'ZCOOL XiaoWei', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', Georgia, serif;
+  --font-hand: 'Architects Daughter', 'ZCOOL XiaoWei', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', cursive;
   --font-mono: 'Courier New', monospace;
   --wobbly-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
   --wobbly-radius-sm: 40px 5px 30px 5px / 5px 30px 5px 40px;
