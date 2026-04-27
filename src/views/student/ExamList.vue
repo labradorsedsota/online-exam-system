@@ -131,21 +131,7 @@ function confirmStart() {
     showNameDialog.value = false
     return
   }
-  // BUG-006 fix: check duplicate — same student + same paper
-  const existing = recordStore.items.find(
-    r => r.paperId === p.id && r.studentName === studentName.value.trim()
-  )
-  if (existing) {
-    if (existing.status === 'in-progress') {
-      // Resume unfinished exam
-      showNameDialog.value = false
-      router.push('/student/exam/' + p.id + '?record=' + existing.id)
-      return
-    }
-    // Already submitted/graded
-    nameError.value = '您已参加过此考试，不可重复作答'
-    return
-  }
+  // PRD §5.3: allow repeat submissions, each is independent record
   // Create record & navigate
   const record = recordStore.create(p.id, studentName.value.trim())
   showNameDialog.value = false
