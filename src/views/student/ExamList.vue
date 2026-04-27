@@ -78,7 +78,7 @@ const nameError = ref('')
 const selectedPaper = ref(null)
 
 const exams = computed(() => {
-  return paperStore.items.filter(p => p.status === 'published')
+  return paperStore.items.filter(p => p.status === 'published' && p.switchOn)
 })
 
 function examStatus(p) {
@@ -129,6 +129,21 @@ function confirmStart() {
   if (!p.switchOn) {
     toast('考试已暂停', 'error')
     showNameDialog.value = false
+    return
+  }
+  // BUG-006 fix: check duplicate — same student + same paper
+  const existing = recordStore.items.find(
+    r => r.paperId === p.id && r.studentName === studentName.value.trim()
+  )
+  if (existing) {
+    if (existing.status === 'in-progress') {
+      // Resume unfinished exam
+      showNameDialog.value = false
+      router.push('/student/exam/' + p.id + '?record=' + existing.id)
+      return
+    }
+    // Already submitted/graded
+    nameError.value = '您已参加过此考试，不可重复作答'
     return
   }
   // Create record & navigate

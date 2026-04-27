@@ -54,14 +54,19 @@ body::after {
 /* ===== Typography ===== */
 
 h1, h2, h3, h4 {
-  font-family: var(--font-print);
+  font-family: var(--font-hand);
   font-weight: 600;
   color: var(--ink-dark);
 }
 
 h1 { font-size: 1.8rem; }
-h2 { font-size: 1.4rem; }
-h3 { font-size: 1.15rem; }
+h2 {
+  font-size: 1.5rem;
+  padding-bottom: 6px;
+  border-bottom: 2.5px solid var(--ink-dark);
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='4'%3E%3Cpath d='M0 2 Q50 0, 100 2 T200 2 T300 2 T400 2' stroke='%232C2C2C' fill='none' stroke-width='2.5'/%3E%3C/svg%3E") 0 0 30 0/0 0 3px 0 stretch;
+}
+h3 { font-size: 1.2rem; }
 
 .hand-text {
   font-family: var(--font-hand);
@@ -93,11 +98,12 @@ h3 { font-size: 1.15rem; }
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--font-print);
-  font-size: 1.3rem;
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
   font-weight: 700;
   color: var(--ink-dark);
   text-decoration: none;
+  letter-spacing: 0.5px;
 }
 
 .navbar-brand svg {
@@ -129,8 +135,8 @@ h3 { font-size: 1.15rem; }
   padding: 6px 16px;
   background: none;
   border: none;
-  font-family: var(--font-print);
-  font-size: 0.85rem;
+  font-family: var(--font-hand);
+  font-size: 0.9rem;
   cursor: pointer;
   color: var(--ink-medium);
   transition: all 0.2s;
@@ -155,8 +161,8 @@ h3 { font-size: 1.15rem; }
 .nav-link {
   padding: 6px 14px;
   text-decoration: none;
-  font-family: var(--font-print);
-  font-size: 0.9rem;
+  font-family: var(--font-hand);
+  font-size: 0.95rem;
   color: var(--ink-medium);
   border: 1.5px solid transparent;
   border-radius: var(--wobbly-radius-btn);
@@ -213,11 +219,23 @@ h3 { font-size: 1.15rem; }
 
 .card {
   background: var(--paper-bg);
-  border: 2px solid var(--ink-dark);
+  border: 2.5px solid var(--ink-dark);
   border-radius: var(--wobbly-radius);
   padding: 24px;
   margin-bottom: 20px;
   position: relative;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.08);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 40px;
+  width: 1px;
+  height: 100%;
+  background: rgba(192, 57, 43, 0.2);
+  pointer-events: none;
 }
 
 .card-sm {
@@ -242,15 +260,17 @@ h3 { font-size: 1.15rem; }
   align-items: center;
   gap: 6px;
   padding: 8px 18px;
-  font-family: var(--font-print);
-  font-size: 0.9rem;
+  font-family: var(--font-hand);
+  font-size: 0.95rem;
   cursor: pointer;
-  border: 2px solid var(--ink-dark);
+  border: 2.5px solid var(--ink-dark);
   border-radius: var(--wobbly-radius-btn);
   background: var(--tape-beige);
   color: var(--ink-dark);
   transition: all 0.15s;
   text-decoration: none;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.12);
+  position: relative;
 }
 
 .btn:hover {
@@ -304,7 +324,7 @@ h3 { font-size: 1.15rem; }
 
 .form-label {
   display: block;
-  font-family: var(--font-print);
+  font-family: var(--font-hand);
   font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 6px;
@@ -324,6 +344,7 @@ h3 { font-size: 1.15rem; }
   border-radius: var(--wobbly-radius-btn);
   outline: none;
   transition: border-color 0.2s;
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.04);
 }
 
 .form-input:focus,
@@ -532,8 +553,9 @@ table {
 thead th {
   text-align: left;
   padding: 10px 12px;
+  font-family: var(--font-hand);
   font-weight: 600;
-  border-bottom: 2px solid var(--ink-dark);
+  border-bottom: 2.5px solid var(--ink-dark);
   color: var(--ink-dark);
   white-space: nowrap;
 }
@@ -1000,8 +1022,8 @@ tbody tr:hover {
   border-radius: 12px 12px 0 0;
   background: none;
   cursor: pointer;
-  font-family: var(--font-print);
-  font-size: 0.9rem;
+  font-family: var(--font-hand);
+  font-size: 0.95rem;
   color: var(--ink-light);
   margin-bottom: -2px;
   transition: all 0.15s;
@@ -1092,5 +1114,55 @@ tbody tr:hover {
   .navbar {
     flex-wrap: wrap;
     gap: 8px;
+  }
+}
+
+/* ===== Sketchy hand-drawn filter ===== */
+
+.card,
+.dialog-box,
+.popconfirm-box {
+  filter: url(#sketchy);
+}
+
+.btn:not(.btn-sm):not(.btn-icon) {
+  filter: url(#sketchy);
+}
+
+/* ===== Notebook spiral binding decoration ===== */
+
+.navbar {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 28px,
+    rgba(44, 44, 44, 0.06) 28px,
+    rgba(44, 44, 44, 0.06) 29px
+  );
+}
+
+/* ===== Body text uses hand font for full notebook feel ===== */
+
+tbody td {
+  font-family: var(--font-hand);
+}
+
+.empty-state p {
+  font-family: var(--font-hand);
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+
+/* ===== Red margin line on left for ruled paper effect ===== */
+
+.main-content {
+  border-left: 2px solid rgba(192, 57, 43, 0.15);
+  margin-left: 40px;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    border-left: none;
   }
 }

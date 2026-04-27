@@ -118,7 +118,14 @@ function getFullScore(paperId) {
   const p = getPaper(paperId)
   return p ? (p.questions || []).reduce((s, q) => s + (q.score || 0), 0) : 0
 }
-function isFullyGraded(r) { return !Object.values(r.scores).some(s => s === null) }
+function isFullyGraded(r) {
+  // BUG-002 fix: check against paper questions, not just existing scores
+  const paper = getPaper(r.paperId)
+  if (!paper) return false
+  return paper.questions.every(item =>
+    r.scores[item.questionId] !== null && r.scores[item.questionId] !== undefined
+  )
+}
 function formatTime(ts) { return ts ? new Date(ts).toLocaleString('zh-CN') : '' }
 
 const filtered = computed(() => {

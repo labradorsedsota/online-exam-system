@@ -103,6 +103,11 @@ function formatDate(ts) {
 }
 
 function publish(p) {
+  // BUG-007 fix: block publishing empty papers
+  if (!p.questions || p.questions.length === 0) {
+    toast('试卷至少需要包含 1 道题目才能发布', 'error')
+    return
+  }
   paperStore.publish(p.id)
   toast('试卷已发布')
 }
@@ -114,7 +119,8 @@ function closePaper(p) {
 
 function toggleSwitch(p) {
   paperStore.toggleSwitch(p.id)
-  toast(p.switchOn ? '考试已暂停' : '考试已开启')
+  // BUG-003 fix: toggleSwitch already flipped p.switchOn, read new state
+  toast(p.switchOn ? '考试已开启' : '考试已暂停')
 }
 
 function confirmDelete(p) { deleting.value = p }

@@ -113,7 +113,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, inject, onMounted } from 'vue'
+import { ref, reactive, inject, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { questionStore } from '../../stores/index.js'
 
@@ -141,6 +141,13 @@ const form = reactive({
 
 const errors = reactive({})
 const newTag = ref('')
+
+// BUG-001 fix: clear validation errors as user types
+watch(() => form.type, () => { delete errors.type })
+watch(() => form.stem, () => { delete errors.stem })
+watch(() => form.options, () => { delete errors.options }, { deep: true })
+watch(() => form.correctAnswer, () => { delete errors.correctAnswer })
+watch(() => form.correctAnswers, () => { delete errors.correctAnswers }, { deep: true })
 
 function addOption() {
   form.options.push('')
